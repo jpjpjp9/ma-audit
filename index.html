@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PortCo M&A Readiness Audit | Lunabre</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .intro {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+        
+        .intro h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .category {
+            background: white;
+            padding: 30px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .category:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+        
+        .category h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .category-icon {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .question {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .question p {
+            margin-bottom: 15px;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        
+        .scale {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .scale-label {
+            font-size: 0.85em;
+            color: #666;
+            min-width: 80px;
+        }
+        
+        .scale-label.left {
+            text-align: right;
+        }
+        
+        .scale-label.right {
+            text-align: left;
+        }
+        
+        .scale-options {
+            display: flex;
+            gap: 15px;
+            flex: 1;
+            justify-content: center;
+        }
+        
+        .scale-option {
+            position: relative;
+        }
+        
+        .scale-option input[type="radio"] {
+            opacity: 0;
+            position: absolute;
+        }
+        
+        .scale-option label {
+            display: block;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e9ecef;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: #6c757d;
+        }
+        
+        .scale-option input[type="radio"]:checked + label {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .scale-option label:hover {
+            background: #dee2e6;
+            transform: scale(1.05);
+        }
+        
+        .scale-option input[type="radio"]:checked + label:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .submit-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        .submit-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .results {
+            display: none;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            margin-top: 30px;
+        }
+        
+        .results h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .score-display {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .score-value {
+            font-size: 4em;
+            font-weight: bold;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .score-label {
+            font-size: 1.2em;
+            color: #666;
+            margin-top: 10px;
+        }
+        
+        .category-scores {
+            margin: 30px 0;
+        }
+        
+        .category-score {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .category-score h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .score-bar {
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+        
+        .score-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 1s ease;
+            border-radius: 10px;
+        }
+        
+        .recommendations {
+            margin-top: 30px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+        
+        .recommendations h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+        
+        .recommendation-item {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .recommendation-item:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .research-links {
+            margin-top: 40px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+        
+        .research-links h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+        
+        .research-links ul {
+            list-style: none;
+        }
+        
+        .research-links li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .research-links li:before {
+            content: "📊";
+            position: absolute;
+            left: 0;
+        }
+        
+        .research-links a {
+            color: #667eea;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .research-links a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 600px) {
+            .scale {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .scale-label {
+                text-align: center !important;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>PortCo M&A Readiness Audit</h1>
+            <p>Assess your organization's preparedness for successful M&A integration</p>
+        </div>
+        
+        <div class="intro">
+            <h2>About This Assessment</h2>
+            <p>This 5-minute audit evaluates your company across seven critical dimensions that determine M&A success. Based on extensive research showing that 70-90% of M&As fail to deliver promised value—primarily due to human and organizational factors—this tool helps identify potential integration risks before they impact deal value.</p>
+            <p style="margin-top: 15px;"><strong>Instructions:</strong> Rate each statement on a scale of 1 (Strongly Disagree) to 5 (Strongly Agree) based on your organization's current state.</p>
+            
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-top: 20px; border-left: 4px solid #667eea;">
+                <h3 style="color: #667eea; margin-bottom: 15px;">Scoring System</h3>
+                <p style="margin-bottom: 10px;"><strong>Question Weights:</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li><span style="color: #dc3545; font-weight: bold;">CRITICAL (2x Weight)</span> - Fundamental areas that predict M&A success/failure</li>
+                    <li><span style="color: #ff6b35; font-weight: bold;">HIGH IMPORTANCE (1.5x Weight)</span> - Key structural elements for integration</li>
+                    <li><strong>STANDARD (1x Weight)</strong> - Important supporting factors</li>
+                </ul>
+                <p style="margin-bottom: 10px;"><strong>Automatic Fail Conditions:</strong></p>
+                <ul style="margin-left: 20px;">
+                    <li><strong>Deal-Breakers:</strong> Any score of "1" (Strongly Disagree) on questions marked as Deal-Breakers will result in an automatic "NOT READY" assessment</li>
+                    <li><strong>Red Flags:</strong> Any score of "1" on questions marked as Red Flags will require minimum 6-month remediation before M&A consideration</li>
+                </ul>
+            </div>
+        </div>
+        
+        <form id="auditForm">
+            <!-- Cultural Alignment & Integration -->
+            <div class="category">
+                <h3><span class="category-icon">1</span> Cultural Alignment & Integration</h3>
+                
+                <div class="question">
+                    <p>Our company has clearly documented values and cultural norms that guide daily decision-making <span style="color: #dc3545; font-weight: bold;">[CRITICAL - 2x Weight]</span></p>
+                    <div class="scale">
+                        <span class="scale-label left">Strongly<br>Disagree</span>
+                        <div class="scale-options">
+                            <div class="scale-option">
+                                <input type="radio" name="q1" value="1" id="q1-1">
+                                <label for="q1-1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q1" value="2" id="q1-2">
+                                <label for="q1-2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q1" value="3" id="q1-3">
+                                <label for="q1-3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q1" value="4" id="q1-4">
+                                <label for="q1-4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q1" value="5" id="q1-5">
+                                <label for="q1-5">5</label>
+                            </div>
+                        </div>
+                        <span class="scale-label right">Strongly<br>Agree</span>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p>We have successfully integrated different teams or departments with varying work styles in the past</p>
+                    <div class="scale">
+                        <span class="scale-label left">Strongly<br>Disagree</span>
+                        <div class="scale-options">
+                            <div class="scale-option">
+                                <input type="radio" name="q2" value="1" id="q2-1">
+                                <label for="q2-1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q2" value="2" id="q2-2">
+                                <label for="q2-2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q2" value="3" id="q2-3">
+                                <label for="q2-3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q2" value="4" id="q2-4">
+                                <label for="q2-4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q2" value="5" id="q2-5">
+                                <label for="q2-5">5</label>
+                            </div>
+                        </div>
+                        <span class="scale-label right">Strongly<br>Agree</span>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p>Our decision-making processes are adaptable and can accommodate different organizational styles</p>
+                    <div class="scale">
+                        <span class="scale-label left">Strongly<br>Disagree</span>
+                        <div class="scale-options">
+                            <div class="scale-option">
+                                <input type="radio" name="q3" value="1" id="q3-1">
+                                <label for="q3-1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q3" value="2" id="q3-2">
+                                <label for="q3-2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q3" value="3" id="q3-3">
+                                <label for="q3-3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q3" value="4" id="q3-4">
+                                <label for="q3-4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q3" value="5" id="q3-5">
+                                <label for="q3-5">5</label>
+                            </div>
+                        </div>
+                        <span class="scale-label right">Strongly<br>Agree</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Leadership Alignment & Succession -->
+            <div class="category">
+                <h3><span class="category-icon">2</span> Leadership Alignment & Succession</h3>
+                
+                <div class="question">
+                    <p>Our leadership team shares a unified vision and consistently demonstrates aligned priorities <span style="color: #ff6b35; font-weight: bold;">[HIGH IMPORTANCE - 1.5x Weight | Score of 1 = Deal-Breaker]</span></p>
+                    <div class="scale">
+                        <span class="scale-label left">Strongly<br>Disagree</span>
+                        <div class="scale-options">
+                            <div class="scale-option">
+                                <input type="radio" name="q4" value="1" id="q4-1">
+                                <label for="q4-1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q4" value="2" id="q4-2">
+                                <label for="q4-2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q4" value="3" id="q4-3">
+                                <label for="q4-3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q4" value="4" id="q4-4">
+                                <label for="q4-4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q4" value="5" id="q4-5">
+                                <label for="q4-5">5</label>
+                            </div>
+                        </div>
+                        <span class="scale-label right">Strongly<br>Agree</span>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p>We have identified successors for all critical leadership positions and key roles <span style="color: #dc3545; font-weight: bold;">[CRITICAL - 2x Weight | Score of 1 = Deal-Breaker]</span></p>
+                    <div class="scale">
+                        <span class="scale-label left">Strongly<br>Disagree</span>
+                        <div class="scale-options">
+                            <div class="scale-option">
+                                <input type="radio" name="q5" value="1" id="q5-1">
+                                <label for="q5-1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q5" value="2" id="q5-2">
+                                <label for="q5-2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q5" value="3" id="q5-3">
+                                <label for="q5-3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q5" value="4" id="q5-4">
+                                <label for="q5-4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q5" value="5" id="q5-5">
+                                <label for="q5-5">5</label>
+                            </div>
+                        </div>
+                        <span class="scale-label right">Strongly<br>Agree</span>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p>Our leaders effectively collaborate across departments and resolve conflicts constructively</p>
+                    <div class="scale">
+                        <span class="scale-label left">Strongly<br>Disagree</span>
+                        <div class="scale-options">
+                            <div class="scale-option">
+                                <input type="radio" name="q6" value="1" id="q6-1">
+                                <label for="q6-1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q6" value="2" id="q6-2">
+                                <label for="q6-2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q6" value="3" id="q6-3">
+                                <label for="q6-3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q6" value="4" id="q6-4">
+                                <label for="q6-4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q6" value="5" id="q6-5">
+                                <label for="q6-5">5</label>
+                            </div>
+                        </div>
+                        <span class="scale-label right">Strongly<br>Agree</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Communication & Transparency -->
+            <div class="category">
+                <h3><span class="category-icon">3</span> Communication & Transparency</h3>
+                
+                <div class="question">
+                    <p>We have established channels for transparent, two-way communication across all levels <span style="color: #ff6b35; font-weight: bold;">[HIGH IMPORTANCE - 1.5x Weight | Score of 1 = Red Flag]</span></p>
+                    <div class="scale">
+                        <span class="scale-label left">Strongly<br>Disagree</span>
+                        <div class="scale-options">
+                            <div class="scale-option">
+                                <input type="radio" name="q7" value="1" id="q7-1">
+                                <label for="q7-1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q7" value="2" id="q7-2">
+                                <label for="q7-2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q7" value="3" id="q7-3">
+                                <label for="q7-3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q7" value="4" id="q7-4">
+                                <label for="q7-4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q7" value="5" id="q7-5">
+                                <label for="q7-5">5</label>
+                            </div>
+                        </div>
+                        <span class="scale-label right">Strongly<br>Agree</span>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p>Leadership regularly communicates strategic changes and actively listens to employee feedback</p>
+                    <div class="scale">
+                        <span class="scale-label left">Strongly<br>Disagree</span>
+                        <div class="scale-options">
+                            <div class="scale-option">
+                                <input type="radio" name="q8" value="1" id="q8-1">
+                                <label for="q8-1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q8" value="2" id="q8-2">
+                                <label for="q8-2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q8" value="3" id="q8-3">
+                                <label for="q8-3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q8" value="4" id="q8-4">
+                                <label for="q8-4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q8" value="5" id="q8-5">
+                                <label for="q8-5">5</label>
+                            </div>
+                        </div>
+                        <span class="scale-label right">Strongly<br>Agree</span>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p>Employees trust leadership and feel comfortable raising concerns or challenging decisions <span style="color: #dc3545; font-weight: bold;">[CRITICAL - 2x Weight | Score of 1 = Deal-Breaker]</span></p>
+                    <div class="scale">
+                        <span class="scale-label left">Strongly<br>Disagree</span>
+                        <div class="scale-options">
+                            <div class="scale-option">
+                                <input type="radio" name="q9" value="1" id="q9-1">
+                                <label for="q9-1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q9" value="2" id="q9-2">
+                                <label for="q9-2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q9" value="3" id="q9-3">
+                                <label for="q9-3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q9" value="4" id="q9-4">
+                                <label for="q9-4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q9" value="5" id="q9-5">
+                                <label for="q9-5">5</label>
+                            </div>
+                        </div>
+                        <span class="scale-label right">Strongly<br>Agree</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Talent Retention & Development -->
+            <div class="category">
+                <h3><span class="category-icon">4</span> Talent Retention & Development</h3>
+                
+                <div class="question">
+                    <p>We have identified and documented our key talent and their unique contributions <span style="color: #ff6b35; font-weight: bold;">[HIGH IMPORTANCE - 1.5x Weight]</span></p>
+                    <div class="scale">
+                        <span class="scale-label left">Strongly<br>Disagree</span>
+                        <div class="scale-options">
+                            <div class="scale-option">
+                                <input type="radio" name="q10" value="1" id="q10-1">
+                                <label for="q10-1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q10" value="2" id="q10-2">
+                                <label for="q10-2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q10" value="3" id="q10-3">
+                                <label for="q10-3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q10" value="4" id="q10-4">
+                                <label for="q10-4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q10" value="5" id="q10-5">
+                                <label for="q10-5">5</label>
+                            </div>
+                        </div>
+                        <span class="scale-label right">Strongly<br>Agree</span>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p>Our employee turnover rate is below industry average, especially for critical roles <span style="color: #dc3545; font-weight: bold;">[CRITICAL - 2x Weight | Score of 1 = Deal-Breaker]</span></p>
+                    <div class="scale">
+                        <span class="scale-label left">Strongly<br>Disagree</span>
+                        <div class="scale-options">
+                            <div class="scale-option">
+                                <input type="radio" name="q11" value="1" id="q11-1">
+                                <label for="q11-1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q11" value="2" id="q11-2">
+                                <label for="q11-2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q11" value="3" id="q11-3">
+                                <label for="q11-3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q11" value="4" id="q11-4">
+                                <label for="q11-4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q11" value="5" id="q11-5">
+                                <label for="q11-5">5</label>
+                            </div>
+                        </div>
+                        <span class="scale-label right">Strongly<br>Agree</span>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p>We have retention strategies in place that go beyond compensation (career paths, development, culture)</p>
+                    <div class="scale">
+                        <span class="scale-label left">Strongly<br>Disagree</span>
+                        <div class="scale-options">
+                            <div class="scale-option">
+                                <input type="radio" name="q12" value="1" id="q12-1">
+                                <label for="q12-1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q12" value="2" id="q12-2">
+                                <label for="q12-2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q12" value="3" id="q12-3">
+                                <label for="q12-3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q12" value="4" id="q12-4">
+                                <label for="q12-4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q12" value="5" id="q12-5">
+                                <label for="q12-5">5</label>
+                            </div>
+                        </div>
+                        <span class="scale-label right">Strongly<br>Agree</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Decision Rights & Governance -->
+            <div class="category">
+                <h3><span class="category-icon">5</span> Decision Rights & Governance</h3>
+                
+                <div class="question">
+                    <p>Decision-making authority is clearly defined and understood at all organizational levels <span style="color: #ff6b35; font-weight: bold;">[HIGH IMPORTANCE - 1.5x Weight | Score of 1 = Red Flag]</span></p>
+                    <div class="scale">
+                        <span class="scale-label left">Strongly<br>Disagree</span>
+                        <div class="scale-options">
+                            <div class="scale-option">
+                                <input type="radio" name="q13" value="1" id="q13-1">
+                                <label for="q13-1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q13" value="2" id="q13-2">
+                                <label for="q13-2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q13" value="3" id="q13-3">
+                                <label for="q13-3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q13" value="4" id="q13-4">
+                                <label for="q13-4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q13" value="5" id="q13-5">
+                                <label for="q13-5">5</label>
+                            </div>
+                        </div>
+                        <span class="scale-label right">Strongly<br>Agree</span>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p>We have formal governance structures (committees, RACI matrices) that enable swift decision-making</p>
+                    <div class="scale">
+                        <span class="scale-label left">Strongly<br>Disagree</span>
+                        <div class="scale-options">
+                            <div class="scale-option">
+                                <input type="radio" name="q14" value="1" id="q14-1">
+                                <label for="q14-1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q14" value="2" id="q14-2">
+                                <label for="q14-2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q14" value="3" id="q14-3">
+                                <label for="q14-3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q14" value="4" id="q14-4">
+                                <label for="q14-4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q14" value="5" id="q14-5">
+                                <label for="q14-5">5</label>
+                            </div>
+                        </div>
+                        <span class="scale-label right">Strongly<br>Agree</span>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p>Role responsibilities are documented and there's minimal overlap or confusion between positions</p>
+                    <div class="scale">
+                        <span class="scale-label left">Strongly<br>Disagree</span>
+                        <div class="scale-options">
+                            <div class="scale-option">
+                                <input type="radio" name="q15" value="1" id="q15-1">
+                                <label for="q15-1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q15" value="2" id="q15-2">
+                                <label for="q15-2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q15" value="3" id="q15-3">
+                                <label for="q15-3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q15" value="4" id="q15-4">
+                                <label for="q15-4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q15" value="5" id="q15-5">
+                                <label for="q15-5">5</label>
+                            </div>
+                        </div>
+                        <span class="scale-label right">Strongly<br>Agree</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Change Management & Employee Experience -->
+            <div class="category">
+                <h3><span class="category-icon">6</span> Change Management & Employee Experience</h3>
+                
+                <div class="question">
+                    <p>We have successfully managed significant organizational changes with minimal disruption</p>
+                    <div class="scale">
+                        <span class="scale-label left">Strongly<br>Disagree</span>
+                        <div class="scale-options">
+                            <div class="scale-option">
+                                <input type="radio" name="q16" value="1" id="q16-1">
+                                <label for="q16-1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q16" value="2" id="q16-2">
+                                <label for="q16-2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q16" value="3" id="q16-3">
+                                <label for="q16-3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q16" value="4" id="q16-4">
+                                <label for="q16-4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q16" value="5" id="q16-5">
+                                <label for="q16-5">5</label>
+                            </div>
+                        </div>
+                        <span class="scale-label right">Strongly<br>Agree</span>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p>Employee engagement scores remain stable or improve during periods of change</p>
+                    <div class="scale">
+                        <span class="scale-label left">Strongly<br>Disagree</span>
+                        <div class="scale-options">
+                            <div class="scale-option">
+                                <input type="radio" name="q17" value="1" id="q17-1">
+                                <label for="q17-1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q17" value="2" id="q17-2">
+                                <label for="q17-2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q17" value="3" id="q17-3">
+                                <label for="q17-3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q17" value="4" id="q17-4">
+                                <label for="q17-4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q17" value="5" id="q17-5">
+                                <label for="q17-5">5</label>
+                            </div>
+                        </div>
+                        <span class="scale-label right">Strongly<br>Agree</span>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p>We regularly measure employee sentiment and act on feedback to improve the workplace experience</p>
+                    <div class="scale">
+                        <span class="scale-label left">Strongly<br>Disagree</span>
+                        <div class="scale-options">
+                            <div class="scale-option">
+                                <input type="radio" name="q18" value="1" id="q18-1">
+                                <label for="q18-1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q18" value="2" id="q18-2">
+                                <label for="q18-2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q18" value="3" id="q18-3">
+                                <label for="q18-3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q18" value="4" id="q18-4">
+                                <label for="q18-4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q18" value="5" id="q18-5">
+                                <label for="q18-5">5</label>
+                            </div>
+                        </div>
+                        <span class="scale-label right">Strongly<br>Agree</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Compensation & Incentive Alignment -->
+            <div class="category">
+                <h3><span class="category-icon">7</span> Compensation & Incentive Alignment</h3>
+                
+                <div class="question">
+                    <p>Our compensation philosophy is clearly defined and consistently applied across the organization</p>
+                    <div class="scale">
+                        <span class="scale-label left">Strongly<br>Disagree</span>
+                        <div class="scale-options">
+                            <div class="scale-option">
+                                <input type="radio" name="q19" value="1" id="q19-1">
+                                <label for="q19-1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q19" value="2" id="q19-2">
+                                <label for="q19-2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q19" value="3" id="q19-3">
+                                <label for="q19-3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q19" value="4" id="q19-4">
+                                <label for="q19-4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q19" value="5" id="q19-5">
+                                <label for="q19-5">5</label>
+                            </div>
+                        </div>
+                        <span class="scale-label right">Strongly<br>Agree</span>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p>Incentive structures effectively drive desired behaviors and align with company objectives</p>
+                    <div class="scale">
+                        <span class="scale-label left">Strongly<br>Disagree</span>
+                        <div class="scale-options">
+                            <div class="scale-option">
+                                <input type="radio" name="q20" value="1" id="q20-1">
+                                <label for="q20-1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q20" value="2" id="q20-2">
+                                <label for="q20-2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q20" value="3" id="q20-3">
+                                <label for="q20-3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q20" value="4" id="q20-4">
+                                <label for="q20-4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q20" value="5" id="q20-5">
+                                <label for="q20-5">5</label>
+                            </div>
+                        </div>
+                        <span class="scale-label right">Strongly<br>Agree</span>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p>Employees perceive our total rewards package (salary, benefits, career growth) as fair and competitive</p>
+                    <div class="scale">
+                        <span class="scale-label left">Strongly<br>Disagree</span>
+                        <div class="scale-options">
+                            <div class="scale-option">
+                                <input type="radio" name="q21" value="1" id="q21-1">
+                                <label for="q21-1">1</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q21" value="2" id="q21-2">
+                                <label for="q21-2">2</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q21" value="3" id="q21-3">
+                                <label for="q21-3">3</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q21" value="4" id="q21-4">
+                                <label for="q21-4">4</label>
+                            </div>
+                            <div class="scale-option">
+                                <input type="radio" name="q21" value="5" id="q21-5">
+                                <label for="q21-5">5</label>
+                            </div>
+                        </div>
+                        <span class="scale-label right">Strongly<br>Agree</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="submit-container">
+                <button type="submit" class="submit-btn" id="submitBtn">Get Your M&A Readiness Score</button>
+            </div>
+        </form>
+        
+        <div id="results" class="results">
+            <h2>Your M&A Readiness Score</h2>
+            
+            <div class="score-display">
+                <div class="score-circle">
+                    <svg width="200" height="200" viewBox="0 0 200 200">
+                        <circle cx="100" cy="100" r="90" fill="none" stroke="#e9ecef" stroke-width="20"/>
+                        <circle id="scoreArc" cx="100" cy="100" r="90" fill="none" stroke="url(#gradient)" stroke-width="20" 
+                                stroke-dasharray="565.48" stroke-dashoffset="565.48" 
+                                transform="rotate(-90 100 100)" style="transition: stroke-dashoffset 1s ease"/>
+                        <defs>
+                            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <div class="score-value" id="overallScore">0%</div>
+                </div>
+                <div class="score-label" id="scoreLabel">Loading...</div>
+            </div>
+            
+            <div class="category-scores" id="categoryScores"></div>
+            
+            <div class="recommendations" id="recommendations">
+                <h3>Key Recommendations</h3>
+                <div id="recommendationsList"></div>
+            </div>
+        </div>
+        
+        <div class="research-links">
+            <h3>Research Sources & Validation</h3>
+            <ul>
+                <li><a href="https://www.mckinsey.com/capabilities/people-and-organizational-performance/our-insights/organizational-culture-in-mergers-addressing-the-unseen-forces" target="_blank">McKinsey: 95% of executives view cultural fit as critical to integration success</a></li>
+                <li><a href="https://www.deloitte.com/lu/en/our-thinking/future-of-advice/the-future-of-human-capital-in-m-and-a.html" target="_blank">Deloitte: Cultural clashes account for ~30% of M&A integration failures</a></li>
+                <li><a href="https://www.wtwco.com/en-cz/insights/2025/02/avoid-deal-failure-one-employee-at-a-time#:~:text=When%20leaders%20from%20merging%20companies,making" target="_blank">WTW: Leadership misalignment creates power struggles and conflicting priorities</a></li>
+                <li><a href="https://kpmg.com/kpmg-us/content/dam/kpmg/pdf/2023/talent-flight-overlooked-risks-during-m-a.pdf#:~:text=Our%20recent%20study%20confirms%20our,%28Layoffs%20did%20not%20materially" target="_blank">KPMG: Acquired employees are 2x more likely to leave post-acquisition</a></li>
+                <li><a href="https://www.hrfuture.net/strategy-operations/leadership-talent-management/5-critical-post-ma-integration-mistakes-hr-leaders-must-avoid/#:~:text=Communication%20is%20the%20life,acquired%20workers%20leave%20their%20positions" target="_blank">HR Future: 73% of employees say communication during M&A is critical</a></li>
+                <li><a href="https://www.bcg.com/publications/2024/priotizing-employee-support-in-pmis#:~:text=The%20stakes%20are%20high,often%20depart%20for%20new%20opportunities" target="_blank">BCG: 50%+ of transactions fail to increase shareholder return</a></li>
+                <li><a href="https://www.sei.com/insights/article/navigating-change-post-merger-organizational-design-strategies/#:~:text=%2A%20Decision%20Rights%3A%20Establishing%20well,and%20quicker%20responses%20to%20changes" target="_blank">SEI: Well-defined decision rights reduce bottlenecks and confusion</a></li>
+                <li><a href="https://www.bpesearch.com/en-US/blog/2025/04/the-silent-crisis-avoiding-leadership-gaps-in-m-and-a-transitions?source=chatgpt.com" target="_blank">BPE Search: Leadership gaps significantly impede integration success</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        // Ensure DOM is fully loaded
+        window.addEventListener('DOMContentLoaded', function() {
+            const categories = {
+            'Cultural Alignment & Integration': [1, 2, 3],
+            'Leadership Alignment & Succession': [4, 5, 6],
+            'Communication & Transparency': [7, 8, 9],
+            'Talent Retention & Development': [10, 11, 12],
+            'Decision Rights & Governance': [13, 14, 15],
+            'Change Management & Employee Experience': [16, 17, 18],
+            'Compensation & Incentive Alignment': [19, 20, 21]
+        };
+        
+        // Define question weights
+        const questionWeights = {
+            1: 2.0,  // CRITICAL: Documented culture
+            2: 1.0,
+            3: 1.0,
+            4: 1.5,  // HIGH: Leadership alignment
+            5: 2.0,  // CRITICAL: Leadership succession
+            6: 1.0,
+            7: 1.5,  // HIGH: Communication channels
+            8: 1.0,
+            9: 2.0,  // CRITICAL: Employee trust
+            10: 1.5, // HIGH: Key talent identification
+            11: 2.0, // CRITICAL: Turnover rates
+            12: 1.0,
+            13: 1.5, // HIGH: Clear decision rights
+            14: 1.0,
+            15: 1.0,
+            16: 1.0,
+            17: 1.0,
+            18: 1.0,
+            19: 1.0,
+            20: 1.0,
+            21: 1.0
+        };
+        
+        // Define automatic fail conditions
+        const dealBreakers = [4, 5, 9, 11]; // Score of 1 = Stop everything
+        const severeRedFlags = [1, 7, 13];  // Score of 1 = Major remediation
+        
+        const recommendations = {
+            'Cultural Alignment & Integration': {
+                low: "Critical risk: Begin cultural assessment immediately. Document core values, decision-making styles, and work practices. Consider engaging cultural integration specialists before any M&A activity.",
+                medium: "Moderate readiness: Strengthen cultural documentation and create integration playbooks. Conduct cross-functional workshops to test cultural flexibility.",
+                high: "Strong foundation: Maintain cultural awareness through regular pulse checks. Document successful integration practices for future use."
+            },
+            'Leadership Alignment & Succession': {
+                low: "High vulnerability: Develop succession plans for all critical roles immediately. Align leadership team on strategic vision through facilitated sessions.",
+                medium: "Gaps exist: Formalize succession planning and increase leadership alignment activities. Consider executive coaching for key leaders.",
+                high: "Well-positioned: Continue leadership development programs. Stress-test succession plans through scenario planning."
+            },
+            'Communication & Transparency': {
+                low: "Major weakness: Establish formal communication channels and feedback mechanisms. Train leaders in transparent communication practices.",
+                medium: "Room for improvement: Enhance two-way communication processes. Implement regular town halls and anonymous feedback systems.",
+                high: "Communication strength: Leverage strong communication culture as competitive advantage in M&A. Document best practices."
+            },
+            'Talent Retention & Development': {
+                low: "Flight risk high: Immediately identify and secure key talent. Develop comprehensive retention packages beyond compensation.",
+                medium: "Retention concerns: Strengthen talent mapping and create targeted retention strategies for critical roles.",
+                high: "Talent secured: Use strong retention as differentiator. Prepare to be talent acquirer in M&A scenarios."
+            },
+            'Decision Rights & Governance': {
+                low: "Structural confusion: Map all decision rights and create RACI matrices. Establish clear governance committees.",
+                medium: "Clarity needed: Formalize decision-making processes and eliminate role overlaps. Consider organizational design review.",
+                high: "Clear structure: Well-prepared for integration. Focus on change management for governance transitions."
+            },
+            'Change Management & Employee Experience': {
+                low: "Change resistance likely: Build change management capabilities urgently. Invest in employee experience measurement and improvement.",
+                medium: "Developing capability: Enhance change management resources and create employee journey maps for M&A scenarios.",
+                high: "Change-ready culture: Excellent M&A foundation. Deploy change champions network during integration."
+            },
+            'Compensation & Incentive Alignment': {
+                low: "Integration barrier: Review and document compensation philosophy. Prepare for significant harmonization challenges.",
+                medium: "Alignment needed: Conduct compensation benchmarking and create flexible reward frameworks.",
+                high: "Well-aligned rewards: Strong position for integration. Plan for cultural preservation of reward philosophy."
+            }
+        };
+        
+        // Alternative submit button handler for better compatibility
+        document.getElementById('submitBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            document.getElementById('auditForm').dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+        });
+        
+        // Form submit handler
+        document.getElementById('auditForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            try {
+                // Check if all questions are answered
+                const totalQuestions = 21;
+                let answeredQuestions = 0;
+                
+                for (let i = 1; i <= totalQuestions; i++) {
+                    const checkedInput = document.querySelector(`input[name="q${i}"]:checked`);
+                    if (checkedInput) {
+                        answeredQuestions++;
+                    }
+                }
+                
+                if (answeredQuestions < totalQuestions) {
+                    alert(`Please answer all questions. You've completed ${answeredQuestions} of ${totalQuestions} questions.`);
+                    return false;
+                }
+                
+                // Check for automatic fail conditions
+                const failedDealBreakers = [];
+                const failedRedFlags = [];
+                
+                for (const q of dealBreakers) {
+                    const checkedInput = document.querySelector(`input[name="q${q}"]:checked`);
+                    if (checkedInput) {
+                        const value = parseInt(checkedInput.value);
+                        if (value === 1) {
+                            failedDealBreakers.push(q);
+                        }
+                    }
+                }
+                
+                for (const q of severeRedFlags) {
+                    const checkedInput = document.querySelector(`input[name="q${q}"]:checked`);
+                    if (checkedInput) {
+                        const value = parseInt(checkedInput.value);
+                        if (value === 1) {
+                            failedRedFlags.push(q);
+                        }
+                    }
+                }
+                
+                // Calculate weighted scores
+                const categoryScores = {};
+                const questionScores = {};
+                let totalWeightedScore = 0;
+                let totalWeight = 0;
+                
+                for (const [category, questions] of Object.entries(categories)) {
+                    let categoryWeightedTotal = 0;
+                    let categoryWeight = 0;
+                    
+                    for (const q of questions) {
+                        const checkedInput = document.querySelector(`input[name="q${q}"]:checked`);
+                        if (checkedInput) {
+                            const value = parseInt(checkedInput.value);
+                            const weight = questionWeights[q];
+                            
+                            questionScores[q] = value;
+                            categoryWeightedTotal += value * weight;
+                            categoryWeight += weight;
+                        }
+                    }
+                    
+                    const categoryAverage = categoryWeightedTotal / categoryWeight;
+                    categoryScores[category] = categoryAverage;
+                    totalWeightedScore += categoryWeightedTotal;
+                    totalWeight += categoryWeight;
+                }
+                
+                const overallScore = Math.round(((totalWeightedScore / totalWeight) - 1) * 25);
+                
+                // Display results
+                displayResults(overallScore, categoryScores, failedDealBreakers, failedRedFlags, questionScores);
+                
+                // Smooth scroll to results
+                document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+                
+            } catch (error) {
+                console.error('Error in form submission:', error);
+                alert('An error occurred while processing your submission. Please try again.');
+            }
+            
+            return false;
+        });
+        
+        function displayResults(overallScore, categoryScores, failedDealBreakers, failedRedFlags, questionScores) {
+            const results = document.getElementById('results');
+            results.style.display = 'block';
+            
+            // Check for automatic fails
+            const hasAutomaticFail = failedDealBreakers.length > 0 || failedRedFlags.length > 0;
+            
+            // Create fail warning if needed
+            if (hasAutomaticFail) {
+                // Remove any existing fail warning
+                const existingWarning = document.getElementById('failWarning');
+                if (existingWarning) existingWarning.remove();
+                
+                const warningDiv = document.createElement('div');
+                warningDiv.id = 'failWarning';
+                warningDiv.style.cssText = `
+                    background: #dc3545;
+                    color: white;
+                    padding: 30px;
+                    border-radius: 12px;
+                    margin-bottom: 30px;
+                    text-align: center;
+                `;
+                
+                let warningHTML = '<h2 style="margin-bottom: 20px;">⚠️ CRITICAL FAILURES DETECTED</h2>';
+                
+                if (failedDealBreakers.length > 0) {
+                    warningHTML += '<div style="margin-bottom: 20px;"><h3>IMMEDIATE DEAL-BREAKERS:</h3><p style="font-size: 1.1em;">The following critical areas scored "Strongly Disagree" and indicate your organization is NOT ready for M&A:</p><ul style="list-style: none; padding: 0; margin-top: 10px;">';
+                    
+                    const dealBreakerQuestions = {
+                        4: "Leadership team lacks unified vision",
+                        5: "No succession plans for critical roles",
+                        9: "Employees don't trust leadership",
+                        11: "Turnover rate exceeds industry average"
+                    };
+                    
+                    for (const q of failedDealBreakers) {
+                        warningHTML += `<li style="margin: 10px 0;">❌ ${dealBreakerQuestions[q]}</li>`;
+                    }
+                    warningHTML += '</ul><p style="margin-top: 20px; font-weight: bold;">RECOMMENDATION: Stop all M&A activities immediately and address these fundamental issues.</p></div>';
+                }
+                
+                if (failedRedFlags.length > 0) {
+                    warningHTML += '<div><h3>SEVERE RED FLAGS:</h3><p style="font-size: 1.1em;">The following foundational areas require immediate attention:</p><ul style="list-style: none; padding: 0; margin-top: 10px;">';
+                    
+                    const redFlagQuestions = {
+                        1: "No documented values or cultural norms",
+                        7: "No transparent communication channels",
+                        13: "Decision-making authority is unclear"
+                    };
+                    
+                    for (const q of failedRedFlags) {
+                        warningHTML += `<li style="margin: 10px 0;">🚨 ${redFlagQuestions[q]}</li>`;
+                    }
+                    warningHTML += '</ul><p style="margin-top: 20px; font-weight: bold;">RECOMMENDATION: Minimum 6-month remediation program required before considering M&A.</p></div>';
+                }
+                
+                warningDiv.innerHTML = warningHTML;
+                results.insertBefore(warningDiv, results.firstChild);
+            }
+            
+            // Adjust overall score display based on fails
+            let scoreColor = '';
+            let adjustedLabel = '';
+            
+            if (failedDealBreakers.length > 0) {
+                scoreColor = '#dc3545';
+                adjustedLabel = 'NOT M&A READY - Critical Failures';
+                // Override score display
+                setTimeout(() => {
+                    document.getElementById('overallScore').textContent = 'FAIL';
+                    document.getElementById('overallScore').style.fontSize = '3em';
+                }, 100);
+            } else if (failedRedFlags.length > 0) {
+                scoreColor = '#dc3545';
+                adjustedLabel = 'Major Issues - 6+ Month Remediation Required';
+                // Still show score but in red
+                setTimeout(() => {
+                    document.getElementById('overallScore').textContent = overallScore + '%';
+                    document.getElementById('overallScore').style.color = scoreColor;
+                }, 100);
+            } else {
+                // Normal score display
+                setTimeout(() => {
+                    document.getElementById('overallScore').textContent = overallScore + '%';
+                    const circumference = 2 * Math.PI * 90;
+                    const offset = circumference - (overallScore / 100) * circumference;
+                    document.getElementById('scoreArc').style.strokeDashoffset = offset;
+                }, 100);
+                
+                if (overallScore < 50) {
+                    adjustedLabel = 'High Risk - Significant preparation needed';
+                    scoreColor = '#dc3545';
+                } else if (overallScore < 70) {
+                    adjustedLabel = 'Moderate Risk - Key areas require attention';
+                    scoreColor = '#ffc107';
+                } else {
+                    adjustedLabel = 'M&A Ready - Well-positioned for integration';
+                    scoreColor = '#28a745';
+                }
+            }
+            
+            document.getElementById('scoreLabel').textContent = adjustedLabel;
+            document.getElementById('scoreLabel').style.color = scoreColor;
+            
+            // Display category scores
+            const categoryScoresDiv = document.getElementById('categoryScores');
+            categoryScoresDiv.innerHTML = '<h3 style="color: #667eea; margin-bottom: 20px;">Category Breakdown (Weighted Scores)</h3>';
+            
+            const sortedCategories = Object.entries(categoryScores).sort((a, b) => a[1] - b[1]);
+            
+            for (const [category, score] of sortedCategories) {
+                const percentage = Math.round((score - 1) * 25);
+                const scoreLevel = percentage < 50 ? 'low' : percentage < 70 ? 'medium' : 'high';
+                
+                const categoryDiv = document.createElement('div');
+                categoryDiv.className = 'category-score';
+                
+                // Check if this category has any critical failures
+                let categoryWarning = '';
+                const categoryQuestions = categories[category];
+                for (const q of categoryQuestions) {
+                    if ((dealBreakers.includes(q) || severeRedFlags.includes(q)) && questionScores[q] === 1) {
+                        categoryWarning = ' ⚠️ <span style="color: #dc3545; font-weight: bold;">Contains Critical Failure</span>';
+                        break;
+                    }
+                }
+                
+                categoryDiv.innerHTML = `
+                    <h4>${category}${categoryWarning}</h4>
+                    <div class="score-bar">
+                        <div class="score-fill" style="width: 0%; background: ${percentage < 50 ? '#dc3545' : percentage < 70 ? '#ffc107' : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'};" data-width="${percentage}%"></div>
+                    </div>
+                    <p style="margin-top: 5px; color: #666;">${percentage}% - ${scoreLevel === 'low' ? 'Needs Immediate Attention' : scoreLevel === 'medium' ? 'Moderate Readiness' : 'Strong Position'}</p>
+                `;
+                categoryScoresDiv.appendChild(categoryDiv);
+            }
+            
+            // Animate category bars
+            setTimeout(() => {
+                const bars = document.querySelectorAll('.score-fill');
+                bars.forEach(bar => {
+                    bar.style.width = bar.getAttribute('data-width');
+                });
+            }, 500);
+            
+            // Generate recommendations
+            const recommendationsDiv = document.getElementById('recommendationsList');
+            recommendationsDiv.innerHTML = '';
+            
+            // If there are critical failures, focus on those first
+            if (hasAutomaticFail) {
+                const criticalRec = document.createElement('div');
+                criticalRec.className = 'recommendation-item';
+                criticalRec.style.cssText = 'background: #fff3cd; padding: 20px; border-radius: 8px; border-left: 4px solid #dc3545; margin-bottom: 20px;';
+                criticalRec.innerHTML = '<strong style="color: #dc3545;">PRIORITY #1 - Address Critical Failures:</strong> Before any other improvements, you must resolve the critical failures identified above. These represent fundamental organizational weaknesses that will doom any M&A effort. Focus 100% of your resources here first.';
+                recommendationsDiv.appendChild(criticalRec);
+            }
+            
+            // Focus on the three lowest scoring categories (excluding any with critical failures already addressed)
+            const lowestCategories = sortedCategories.slice(0, 3);
+            
+            for (const [category, score] of lowestCategories) {
+                const percentage = Math.round((score - 1) * 25);
+                const level = percentage < 50 ? 'low' : percentage < 70 ? 'medium' : 'high';
+                
+                const recDiv = document.createElement('div');
+                recDiv.className = 'recommendation-item';
+                recDiv.innerHTML = `<strong>${category}:</strong> ${recommendations[category][level]}`;
+                recommendationsDiv.appendChild(recDiv);
+            }
+            
+            // Add general recommendation based on overall score
+            const generalRec = document.createElement('div');
+            generalRec.className = 'recommendation-item';
+            generalRec.style.marginTop = '20px';
+            generalRec.style.paddingTop = '20px';
+            generalRec.style.borderTop = '2px solid #e9ecef';
+            
+            if (failedDealBreakers.length > 0) {
+                generalRec.innerHTML = '<strong>Overall Assessment:</strong> Your organization has critical failures that make M&A impossible at this time. These deal-breakers indicate fundamental organizational dysfunction that must be resolved before even considering a transaction. We strongly recommend engaging organizational development specialists immediately to create a comprehensive remediation plan. M&A should not be considered for at least 12-18 months.';
+            } else if (failedRedFlags.length > 0) {
+                generalRec.innerHTML = '<strong>Overall Assessment:</strong> Your organization has severe foundational gaps that require immediate attention. While not absolute deal-breakers, these red flags indicate missing infrastructure that will cause M&A failure. A minimum 6-month intensive preparation program is required before considering any transaction. Focus on building the basic organizational capabilities identified above.';
+            } else if (overallScore < 50) {
+                generalRec.innerHTML = '<strong>Overall Assessment:</strong> Your organization faces significant M&A integration risks across multiple dimensions. We recommend a comprehensive 6-12 month readiness program addressing all seven dimensions before pursuing any transaction. Consider engaging M&A integration specialists to develop a remediation roadmap.';
+            } else if (overallScore < 70) {
+                generalRec.innerHTML = '<strong>Overall Assessment:</strong> Your organization shows moderate M&A readiness with specific areas requiring attention. Focus on the lowest-scoring dimensions first, as these represent your highest integration risks. A 3-6 month targeted preparation program could significantly improve success probability.';
+            } else {
+                generalRec.innerHTML = '<strong>Overall Assessment:</strong> Your organization is well-positioned for M&A activity. Focus on maintaining strengths while addressing any remaining gaps. Consider developing an M&A playbook to codify your advantages and ensure consistent execution. You have the foundation for successful integration.';
+            }
+            
+            recommendationsDiv.appendChild(generalRec);
+        }
+        
+        }); // End DOMContentLoaded
+    </script>
+</body>
+</html>
