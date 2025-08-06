@@ -1287,6 +1287,10 @@
             
             // Check for automatic fails
             const hasAutomaticFail = failedDealBreakers.length > 0 || failedRedFlags.length > 0;
+
+            // Remove any existing fail warning first
+            const existingWarning = document.getElementById('failWarning');
+            if (existingWarning) existingWarning.remove();
             
             // Create fail warning if needed
             if (hasAutomaticFail) {
