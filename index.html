@@ -343,11 +343,25 @@
         
         @media (max-width: 600px) {
             .scale {
-                flex-direction: column;
-                gap: 15px;
+                flex-direction: row !important;
+                gap: 5px;
+                position: relative;
+                padding-top: 30px;
             }
             
             .scale-label {
+                position: absolute;
+                top: 0;
+                font-size: 0.7em;
+                min-width: unset;
+            }
+            .scale-label.left {
+                left: 0;
+                text-align: center !important;
+            }
+    
+            .scale-label.right {
+                right: 0;
                 text-align: center !important;
             }
             
