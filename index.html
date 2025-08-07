@@ -342,33 +342,49 @@
         }
         
         @media (max-width: 600px) {
-            .scale {
-                flex-direction: row !important;
-                gap: 5px;
-                position: relative;
-                padding-top: 30px;
-            }
-            
-            .scale-label {
-                position: absolute;
-                top: 0;
-                bottom: 5px
-                font-size: 0.7em;
-                min-width: unset;
-            }
-            .scale-label.left {
-                left: 0;
-                text-align: center !important;
-            }
-    
-            .scale-label.right {
-                right: 0;
-                text-align: center !important;
-            }
-            
-            .header h1 {
-                font-size: 2em;
-            }
+        .scale {
+            flex-direction: row !important;
+            gap: 5px;
+            position: relative;
+            padding-top: 35px;
+        }
+        
+        .scale-label {
+            position: absolute;
+            top: 0;
+            font-size: 0.65em;
+            min-width: unset;
+            white-space: nowrap;
+        }
+        
+        .scale-label.left {
+            left: -5px;
+            text-align: center !important;
+            transform: translateX(0);
+        }
+        
+        .scale-label.right {
+            right: -5px;
+            text-align: center !important;
+            transform: translateX(0);
+        }
+        
+        /* Make the buttons slightly smaller on mobile */
+        .scale-option label {
+            width: 35px;
+            height: 35px;
+            font-size: 0.9em;
+        }
+        
+        /* Reduce gap between buttons on mobile */
+        .scale-options {
+            gap: 10px;
+        }
+        
+        .header h1 {
+            font-size: 2em;
+        }
+    }
         }
     </style>
 </head>
