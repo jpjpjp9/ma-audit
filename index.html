@@ -1,0 +1,483 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Executive Edge — Boardroom Trade‑Offs (MVP)</title>
+  <style>
+    :root {
+      --g1:#667eea; --g2:#764ba2; --ink:#2c3e50; --muted:#6c757d; --bg:#f8f9fa; --card:#ffffff; --ok:#28a745; --warn:#ffc107; --bad:#dc3545;
+    }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif; background:var(--bg); color:var(--ink); }
+    .wrap { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .hero { background: linear-gradient(135deg,var(--g1),var(--g2)); color:#fff; border-radius: 14px; padding: 40px 28px; margin: 16px 0 28px; box-shadow: 0 10px 30px rgba(0,0,0,.12); }
+    .hero h1 { margin: 0 0 8px; font-size: 28px; }
+    .hero p { margin: 0; opacity: .92; }
+
+    .steps { display:flex; gap:8px; margin: 16px 0 24px; align-items:center; }
+    .step { flex:1; height:6px; background:#e9ecef; border-radius: 999px; overflow:hidden; }
+    .step > span { display:block; height:100%; width:0; background: linear-gradient(135deg,var(--g1),var(--g2)); transition: width .4s ease; }
+
+    .card { background:var(--card); border-radius: 12px; padding: 20px; box-shadow: 0 6px 18px rgba(0,0,0,.06); margin-bottom: 16px; }
+    h2 { font-size: 20px; margin: 0 0 8px; color: var(--g1); }
+    h3 { font-size: 18px; margin: 0 0 8px; color: var(--ink); }
+    p  { margin: 6px 0 12px; }
+
+    .grid { display:grid; gap:12px; grid-template-columns: repeat(2,minmax(0,1fr)); }
+    @media (max-width: 640px){ .grid { grid-template-columns: 1fr; } }
+
+    .lever { border:1px solid #edf2f7; border-radius: 10px; padding: 12px; display:flex; align-items:center; justify-content:space-between; gap: 8px; }
+    .lever h4 { margin: 0; font-size: 15px; }
+    .lever small { color: var(--muted); display:block; }
+    .qty { display:flex; align-items:center; gap:8px; }
+    .btn { border:0; background:#e9ecef; padding:8px 10px; border-radius:10px; cursor:pointer; font-weight:700; }
+    .btn:hover { filter: brightness(0.97); }
+    .qty input { width: 56px; text-align:center; padding:6px; border-radius:8px; border:1px solid #ced4da; }
+
+    .muted { color: var(--muted); font-size: 13px; }
+    .pill { display:inline-block; padding:4px 10px; border-radius:999px; background:#eef2ff; color: var(--g1); font-weight:600; font-size: 12px; }
+    .primary { background: linear-gradient(135deg,var(--g1),var(--g2)); color:#fff; border:0; padding: 12px 18px; border-radius: 999px; cursor:pointer; box-shadow: 0 10px 20px rgba(118,75,162,.2); }
+    .primary:disabled { opacity:.4; cursor:not-allowed; }
+    .cta-row { display:flex; gap:12px; justify-content:flex-end; margin-top: 10px; }
+
+    .radio-group { display:grid; gap:8px; }
+    .opt { border:1px solid #e9ecef; border-radius: 10px; padding: 12px; display:flex; gap:10px; align-items:flex-start; cursor:pointer; }
+    .opt input { margin-top: 2px; }
+
+    .pair { display:flex; gap:10px; align-items:center; justify-content:space-between; border:1px dashed #e9ecef; padding: 10px 12px; border-radius:10px; }
+    .pair strong { font-size: 14px; }
+    .timer { font-variant-numeric: tabular-nums; font-weight:700; }
+
+    .bar { height: 12px; background:#e9ecef; border-radius: 999px; overflow:hidden; }
+    .bar > span { display:block; height:100%; width:0; background: linear-gradient(135deg,var(--g1),var(--g2)); transition: width .7s ease; }
+
+    .ryg { display:flex; gap:8px; align-items:center; }
+    .ryg .dot { width:10px; height:10px; border-radius:999px; background:#e9ecef; }
+    .ryg .dot.ok { background: var(--ok); }
+    .ryg .dot.warn { background: var(--warn); }
+    .ryg .dot.bad { background: var(--bad); }
+
+    .results h2 { color: var(--g1); }
+    .score-circle { width: 160px; height:160px; position:relative; }
+    .score-circle .val { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:42px; font-weight:800; }
+
+    .two-col { display:grid; gap:16px; grid-template-columns: 1.1fr .9fr; }
+    @media (max-width: 900px){ .two-col { grid-template-columns: 1fr; } }
+
+    .subtle { opacity:.85; }
+    .footer-cta { text-align:center; margin: 18px 0 8px; }
+    .link { color: var(--g1); text-decoration:none; font-weight:600; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <h1>Executive Edge — Boardroom Trade‑Offs</h1>
+      <p>Most CEOs give themselves an A. The market doesn’t. This 3‑minute exercise reveals what your operating choices say about readiness.</p>
+    </section>
+
+    <div class="steps">
+      <div class="step"><span id="s1"></span></div>
+      <div class="step"><span id="s2"></span></div>
+      <div class="step"><span id="s3"></span></div>
+    </div>
+
+    <!-- STEP 1: Token Allocation -->
+    <section id="step1" class="card">
+      <h2>Round 1 — Capital Allocation</h2>
+      <p class="subtle">Distribute <strong>100 tokens</strong> across the pulls that quietly run your company. You can’t pick everything. <span class="pill">Trade‑off, not preference</span></p>
+      <p class="muted">Tokens remaining: <strong id="remaining">100</strong></p>
+      <div class="grid" id="levers"></div>
+      <div class="cta-row">
+        <button class="primary" id="toStep2" disabled>Lock Round 1</button>
+      </div>
+    </section>
+
+    <!-- STEP 2: Collision Cards -->
+    <section id="step2" class="card" style="display:none">
+      <h2>Round 2 — Collision Cards</h2>
+      <p class="subtle">Pick how you’d respond. We’re watching for clarity, trust, and alignment consequences.</p>
+
+      <div id="cards"></div>
+
+      <div class="cta-row">
+        <button class="primary" id="toStep3" disabled>Lock Round 2</button>
+      </div>
+    </section>
+
+    <!-- STEP 3: Lightning Dilemmas -->
+    <section id="step3" class="card" style="display:none">
+      <h2>Round 3 — Lightning Trade‑offs <span class="muted">(~45s)</span></h2>
+      <p class="subtle">Ten quick choices. Don’t overthink. <span class="pill">Timer on</span> <span class="timer" id="ltimer">0s</span></p>
+      <div id="pairs"></div>
+      <div class="cta-row">
+        <button class="primary" id="reveal" disabled>Reveal My Edge Vector</button>
+      </div>
+    </section>
+
+    <!-- RESULTS -->
+    <section id="results" class="results" style="display:none">
+      <div class="card">
+        <h2>Your Edge Vector</h2>
+        <div class="two-col">
+          <div>
+            <div class="score-circle" aria-label="Overall score circle">
+              <svg width="160" height="160" viewBox="0 0 160 160">
+                <circle cx="80" cy="80" r="70" fill="none" stroke="#e9ecef" stroke-width="16" />
+                <defs>
+                  <linearGradient id="grad" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="var(--g1)"/>
+                    <stop offset="100%" stop-color="var(--g2)"/>
+                  </linearGradient>
+                </defs>
+                <circle id="arc" cx="80" cy="80" r="70" fill="none" stroke="url(#grad)" stroke-width="16" stroke-dasharray="439.8" stroke-dashoffset="439.8" transform="rotate(-90 80 80)"/>
+              </svg>
+              <div class="val" id="oval">0%</div>
+            </div>
+            <p id="label" class="subtle" style="margin-top:10px"></p>
+            <div class="card" style="margin-top:12px">
+              <h3 style="margin-bottom:6px">Outlier Probability</h3>
+              <p class="subtle" id="outlierP">–</p>
+            </div>
+          </div>
+          <div>
+            <h3 style="margin-bottom:6px">Category Breakdown</h3>
+            <div id="cats"></div>
+            <div class="card" style="margin-top:12px">
+              <h3 style="margin-bottom:6px">Flags</h3>
+              <div id="flags" class="ryg">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>90‑Day Levers</h3>
+        <ul id="leversList"></ul>
+        <div class="footer-cta">
+          <a href="#" class="link" id="book">Schedule a 20‑minute executive debrief →</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Fund Manager Heatmap (Preview)</h3>
+        <div id="heat"></div>
+        <p class="muted" style="margin-top:6px">We’ll share a portfolio tile with RYG bars and confidence bands. No PII.</p>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    /*********************************
+     * EXECUTIVE EDGE – FLOW 1 (MVP)
+     * Boardroom Trade‑Offs
+     * Lightweight, no backend required
+     *********************************/
+
+    // --- STEP PROGRESS ---
+    const prog = (i)=>{
+      document.getElementById('s1').style.width = i>=1? '100%':'0%';
+      document.getElementById('s2').style.width = i>=2? '100%':'0%';
+      document.getElementById('s3').style.width = i>=3? '100%':'0%';
+    }
+    prog(1);
+
+    // --- ROUND 1: TOKEN ALLOCATION ---
+    const pulls = [
+      { id:'speed', label:'Speed to Ship', hint:'Ship vs. polish', w:{ Change:1.2, Advantage:0.8 }},
+      { id:'quality', label:'Quality Bar', hint:'Rework prevention', w:{ Culture:0.6, Change:0.6, Discipline:0.8 }},
+      { id:'rituals', label:'Cross‑Functional Rituals', hint:'Cadence & cohesion', w:{ Communication:1.0, Culture:1.0 }},
+      { id:'bench', label:'Bench Depth', hint:'Succession & readiness', w:{ Leadership:1.2, Talent:0.8 }},
+      { id:'change', label:'Change Readiness', hint:'Absorb & adapt', w:{ Change:1.4 }},
+      { id:'decision', label:'Decision Clarity', hint:'DRIs & governance', w:{ Governance:1.4, Communication:0.6 }},
+      { id:'comp', label:'Comp Philosophy Integrity', hint:'Fair & consistent', w:{ Incentives:1.4, Talent:0.4 }},
+      { id:'customer', label:'Customer Intimacy', hint:'Signal & empathy', w:{ Culture:0.8, Advantage:0.6 }}
+    ];
+
+    const dims = ['Culture','Leadership','Communication','Talent','Governance','Change','Incentives'];
+    const state = { tokens:{}, round1Total:0, cards:{}, pairs:[], latencies:[] };
+
+    const leversEl = document.getElementById('levers');
+    pulls.forEach(p=>{
+      state.tokens[p.id] = 0;
+      const row = document.createElement('div'); row.className='lever';
+      row.innerHTML = `<div><h4>${p.label}</h4><small>${p.hint}</small></div>
+        <div class="qty">
+          <button class="btn" data-delta="-5" data-id="${p.id}">−5</button>
+          <button class="btn" data-delta="-1" data-id="${p.id}">−1</button>
+          <input type="number" min="0" max="100" step="1" value="0" id="n-${p.id}" />
+          <button class="btn" data-delta="1" data-id="${p.id}">+1</button>
+          <button class="btn" data-delta="5" data-id="${p.id}">+5</button>
+        </div>`;
+      leversEl.appendChild(row);
+    });
+
+    function updateRemaining(){
+      const total = Object.values(state.tokens).reduce((a,b)=>a+b,0);
+      document.getElementById('remaining').textContent = 100-total;
+      document.getElementById('toStep2').disabled = (total!==100);
+      state.round1Total = total;
+    }
+
+    leversEl.addEventListener('click', (e)=>{
+      if(!e.target.matches('.btn')) return;
+      const id = e.target.getAttribute('data-id');
+      const delta = parseInt(e.target.getAttribute('data-delta'));
+      const current = state.tokens[id]||0;
+      const newVal = Math.max(0, Math.min(100, current+delta));
+      const totalWithout = Object.entries(state.tokens).filter(([k])=>k!==id).reduce((a,[,v])=>a+v,0);
+      if(totalWithout + newVal > 100) return; // enforce cap
+      state.tokens[id]=newVal;
+      document.getElementById('n-'+id).value=newVal;
+      updateRemaining();
+    });
+
+    leversEl.addEventListener('change', (e)=>{
+      if(!e.target.matches('input[type="number"]')) return;
+      const id = e.target.id.replace('n-','');
+      let val = parseInt(e.target.value||'0');
+      val = isNaN(val)?0:val; val = Math.max(0,Math.min(100,val));
+      const totalWithout = Object.entries(state.tokens).filter(([k])=>k!==id).reduce((a,[,v])=>a+v,0);
+      if(totalWithout + val > 100){ val = Math.max(0,100-totalWithout); }
+      state.tokens[id]=val; e.target.value = val; updateRemaining();
+    });
+
+    document.getElementById('toStep2').addEventListener('click', ()=>{
+      document.getElementById('step1').style.display='none';
+      document.getElementById('step2').style.display='block';
+      prog(2);
+    });
+
+    // --- ROUND 2: COLLISION CARDS ---
+    const CARDS = [
+      { id:'card1', title:'Unclear Decision Rights', text:'VP Engineering blocks a cross‑org OKR citing unclear decision rights. Quarterly target is at risk.',
+        options:[
+          { id:'c1a', label:'Reaffirm DRIs; time‑box escalation path; proceed with a visible owner.', w:{ Governance:2, Communication:1 }},
+          { id:'c1b', label:'Ask exec team to “sort it out offline”; avoid public friction.', w:{ Culture:-1, Governance:-1 }},
+          { id:'c1c', label:'Create a committee to study decision friction; defer OKR.', w:{ Change:-1, Governance:-1 }},
+          { id:'c1d', label:'Override as CEO; ship now; fix process later.', w:{ Advantage:1, Culture:-1, Governance:-0.5 }}
+        ]},
+      { id:'card2', title:'Trust vs. Harmony', text:'A senior leader with strong results undermines peers in private channels.',
+        options:[
+          { id:'c2a', label:'Direct, documented feedback; expectations; follow‑up. Replace if no change.', w:{ Culture:1, Communication:1 }},
+          { id:'c2b', label:'Quiet warning; no paper trail to preserve optics.', w:{ Culture:-1 }},
+          { id:'c2c', label:'Reassign them away from conflict areas; avoid confrontation.', w:{ Culture:-1, Change:-0.5 }},
+          { id:'c2d', label:'Publicly call out behavior in exec meeting to “set tone.”', w:{ Communication:-0.5, Culture:-0.5 }}
+        ]},
+      { id:'card3', title:'Comp Philosophy Integrity', text:'Market pressure to counter‑offer one star well above band—others will notice.',
+        options:[
+          { id:'c3a', label:'Hold bands; offer growth path; communicate philosophy.', w:{ Incentives:2, Communication:0.5 }},
+          { id:'c3b', label:'Match comp quietly; keep them at any cost.', w:{ Incentives:-1, Culture:-0.5 }},
+          { id:'c3c', label:'Create an exception policy on the fly.', w:{ Governance:-1, Incentives:-0.5 }},
+          { id:'c3d', label:'Let them walk; hire two rising talents.', w:{ Talent:1, Change:0.5 }}
+        ]}
+    ];
+
+    const cardsEl = document.getElementById('cards');
+    CARDS.forEach(card=>{
+      const c = document.createElement('div'); c.className='card';
+      c.innerHTML = `<h3>${card.title}</h3><p class="muted">${card.text}</p><div class="radio-group">${card.options.map(o=>`
+        <label class="opt"><input type="radio" name="${card.id}" value="${o.id}"><span>${o.label}</span></label>
+      `).join('')}</div>`;
+      cardsEl.appendChild(c);
+    });
+
+    cardsEl.addEventListener('change', ()=>{
+      const allAnswered = CARDS.every(c=>document.querySelector(`input[name="${c.id}"]:checked`));
+      document.getElementById('toStep3').disabled = !allAnswered;
+    });
+
+    document.getElementById('toStep3').addEventListener('click', ()=>{
+      // store choices
+      CARDS.forEach(c=>{ state.cards[c.id] = (document.querySelector(`input[name="${c.id}"]:checked`)||{}).value; });
+      document.getElementById('step2').style.display='none';
+      document.getElementById('step3').style.display='block';
+      startLightning();
+      prog(3);
+    });
+
+    // --- ROUND 3: LIGHTNING PAIRS ---
+    const PAIRS = [
+      ['Truth on time','Harmony in public'],
+      ['Decision clarity','Consensus building'],
+      ['Customer signal','Internal commitments'],
+      ['Coach future leaders','Optimize today\'s stars'],
+      ['Speed to learn','Perfection to launch'],
+      ['Transparent philosophy','Case‑by‑case exceptions'],
+      ['Own the problem','Explain the constraints'],
+      ['Direct confrontation','Indirect pressure'],
+      ['Rituals & cadence','Heroic sprints'],
+      ['Change experiments','Policy debates']
+    ];
+    const pairWeights = {
+      // left/right impact deltas across dimensions
+      left:  { Culture:0.6, Communication:0.8, Governance:0.6, Change:0.6 },
+      right: { Advantage:0.6, Discipline:0.6, Talent:0.4 }
+    };
+
+    const pairsEl = document.getElementById('pairs');
+    let pairIndex = 0; let startTime = 0; let timerId; let elapsed=0;
+
+    function startLightning(){
+      pairsEl.innerHTML = '';
+      pairIndex = 0; state.pairs = []; state.latencies = []; elapsed=0;
+      PAIRS.forEach((p,i)=>{
+        const row = document.createElement('div'); row.className='pair'; row.dataset.i=i;
+        row.innerHTML = `
+          <strong>${p[0]}</strong>
+          <div>
+            <label class="opt" style="display:inline-flex;align-items:center;gap:6px;margin-right:8px"><input type="radio" name="pair${i}" value="L"> Left</label>
+            <label class="opt" style="display:inline-flex;align-items:center;gap:6px"><input type="radio" name="pair${i}" value="R"> Right</label>
+          </div>
+          <strong>${p[1]}</strong>`;
+        pairsEl.appendChild(row);
+      });
+      startTime = Date.now();
+      timerId = setInterval(()=>{
+        elapsed = Math.round((Date.now()-startTime)/1000);
+        document.getElementById('ltimer').textContent = `${elapsed}s`;
+      }, 250);
+    }
+
+    pairsEl.addEventListener('change', (e)=>{
+      if(!e.target.name.startsWith('pair')) return;
+      const i = parseInt(e.target.name.replace('pair','')); const v = e.target.value;
+      state.pairs[i] = v; state.latencies[i] = Date.now()-startTime; // crude latency since round start
+      const all = PAIRS.every((_,j)=>state.pairs[j]);
+      document.getElementById('reveal').disabled = !all;
+    });
+
+    document.getElementById('reveal').addEventListener('click', ()=>{
+      clearInterval(timerId);
+      computeResults();
+      document.getElementById('step3').style.display='none';
+      document.getElementById('results').style.display='block';
+      window.scrollTo({ top:0, behavior:'smooth' });
+    });
+
+    // --- SCORING ENGINE (simple, transparent) ---
+    function computeResults(){
+      // 1) Start with zeros
+      const score = { Culture:0, Leadership:0, Communication:0, Talent:0, Governance:0, Change:0, Incentives:0 };
+
+      // 2) Round 1 weights (normalize tokens to 0..1 and distribute into dimensions via pulls.w)
+      const tSum = 100; // enforced
+      pulls.forEach(p=>{
+        const frac = (state.tokens[p.id]||0)/tSum;
+        for(const k in p.w){
+          if(k==='Advantage' || k==='Discipline') continue; // intermediate vector dims only used qualitatively
+          score[k] = (score[k]||0) + frac * p.w[k];
+        }
+      });
+
+      // 3) Round 2 card choices
+      CARDS.forEach(c=>{
+        const pick = (c.options.find(o=>o.id===state.cards[c.id])||{}).w || {};
+        for(const k in pick){
+          if(k==='Advantage' || k==='Discipline') continue;
+          score[k] = (score[k]||0) + pick[k];
+        }
+      });
+
+      // 4) Round 3 pairs (coarse deltas)
+      state.pairs.forEach(v=>{
+        const deltas = v==='L'? pairWeights.left : pairWeights.right;
+        for(const k in deltas){
+          if(!score[k]) score[k]=0;
+          // map Discipline→Governance, Advantage→Change (roughly) for MVP
+          const mapped = (k==='Discipline')? 'Governance' : (k==='Advantage')? 'Change' : k;
+          score[mapped] += deltas[k]*0.15; // small incremental influence per choice
+        }
+      });
+
+      // Normalize to 0..100 scale (heuristic)
+      const norm = {};
+      dims.forEach(d=>{ norm[d] = Math.max(0, Math.min(100, Math.round(score[d] * 25))); });
+
+      // Deal‑breakers / red flags (MVP heuristics)
+      const flags = [];
+      if( (state.tokens['bench']||0) <= 5 ) flags.push({t:'Deal‑Breaker',d:'Leadership & Succession gap'});
+      if( (state.tokens['decision']||0) <= 5 ) flags.push({t:'Severe Red Flag',d:'Decision rights ambiguity'});
+      if( (state.tokens['rituals']||0) <= 5 ) flags.push({t:'Red Flag',d:'Weak comms cadence'});
+
+      // Overall score = average of dims with penalties
+      let overall = Math.round(dims.reduce((a,d)=>a+norm[d],0)/dims.length);
+      if(flags.some(f=>f.t==='Deal‑Breaker')) overall = Math.min(overall, 49);
+      if(flags.some(f=>f.t==='Severe Red Flag')) overall = Math.min(overall, 64);
+
+      // Outlier probability (curiosity framing)
+      let outlier;
+      if(overall>=80) outlier = '≈18% chance you\'re truly top‑tier among comparable operators.';
+      else if(overall>=70) outlier = '≈11% chance you\'re an outlier; targeted prep lifts odds materially.';
+      else outlier = 'Low odds you\'re an outlier today; 3–6 month prep recommended.';
+
+      renderResults(norm, overall, outlier, flags);
+    }
+
+    // --- RENDER ---
+    function renderResults(norm, overall, outlier, flags){
+      // Animate circle
+      const arc = document.getElementById('arc');
+      const circ = 439.8; const offset = circ - (overall/100)*circ; arc.style.strokeDashoffset = circ; setTimeout(()=>{ arc.style.strokeDashoffset = offset; }, 50);
+      document.getElementById('oval').textContent = `${overall}%`;
+      document.getElementById('label').textContent = overall>=70? 'M&A Ready — solid foundation with selective gaps' : overall>=50? 'Moderate risk — fix the friction before scaling' : 'High risk — remediate before any M&A activity';
+      document.getElementById('outlierP').textContent = outlier;
+
+      // Categories
+      const cats = document.getElementById('cats'); cats.innerHTML='';
+      const entries = Object.entries(norm).sort((a,b)=>a[1]-b[1]);
+      entries.forEach(([k,v])=>{
+        const row = document.createElement('div'); row.className='card';
+        const color = v<50? 'var(--bad)': v<70? 'var(--warn)': 'linear-gradient(135deg,var(--g1),var(--g2))';
+        row.innerHTML = `<div style="display:flex;align-items:center;justify-content:space-between"><strong>${k}</strong><span class="muted">${v}%</span></div>
+          <div class="bar" style="margin-top:8px"><span style="width:${v}%; background:${color}"></span></div>`;
+        cats.appendChild(row);
+      });
+
+      // Flags
+      const f = document.getElementById('flags');
+      if(flags.length===0){ f.textContent = 'No critical issues detected.'; }
+      else { f.innerHTML = flags.map(x=>`<span class="pill" style="margin-right:6px">${x.t}: ${x.d}</span>`).join(''); }
+
+      // 90‑Day Levers (heuristic recommendations)
+      const leverList = document.getElementById('leversList'); leverList.innerHTML='';
+      const worst = entries.slice(0,3).map(([k])=>k);
+      const recs = {
+        Culture: 'Codify values → decisions rubric; run a monthly \"collision\" to surface misalignment safely.',
+        Leadership: 'Name successors for top 10 roles; monthly shadow rotations; write down your DOR (Doctrine of Replacement).',
+        Communication: 'Install a 30‑min weekly spine meeting; publish DRIs for cross‑org OKRs.',
+        Talent: 'Map key talent; design 2‑step growth paths; replace heroic saves with documented playbooks.',
+        Governance: 'Publish decision rights (RAPID/RACI); time‑box escalations to 48h; single‑threaded owners.',
+        Change: 'Run 2 change experiments/month with before/after metrics; retro in the open.',
+        Incentives: 'Freeze exception culture; publish comp philosophy; align incentives to desired behaviors.'
+      };
+      worst.forEach(k=>{
+        const li = document.createElement('li'); li.textContent = `${k}: ${recs[k]}`; leverList.appendChild(li);
+      });
+
+      // Fund heatmap preview
+      const heat = document.getElementById('heat'); heat.innerHTML='';
+      entries.forEach(([k,v])=>{
+        const row = document.createElement('div'); row.className='lever';
+        const dotClass = v<50? 'bad' : v<70? 'warn':'ok';
+        row.innerHTML = `<div><strong>${k}</strong><div class="muted">confidence: ${v>0? 'medium':'low'}</div></div>
+          <div class="ryg"><div class="dot ${dotClass}"></div><div class="bar" style="width:200px"><span style="width:${v}%"></span></div></div>`;
+        heat.appendChild(row);
+      });
+
+      // CTA link placeholder (replace with Calendly)
+      document.getElementById('book').href = '#';
+    }
+
+    // --- OPTIONAL: Persist to Airtable / Zapier ---
+    // Hook these objects to your form endpoint if desired:
+    // state.tokens  (Round 1 allocations)
+    // state.cards   (Round 2 choices)
+    // state.pairs   (Round 3 choices)
+    // state.latencies (Round 3 rough timing)
+
+  </script>
+</body>
+</html>
